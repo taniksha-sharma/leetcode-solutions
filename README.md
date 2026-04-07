@@ -13,6 +13,8 @@ Solutions are organized topic-wise:
 - Dynamic Programming
 - Recursion
 - Strings
+- Greedy
+- Backtracking
 
 ## Approach
 Each problem includes:
