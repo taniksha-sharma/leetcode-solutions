@@ -1,0 +1,48 @@
+import java.util.*;
+
+/*
+Approach:
+- Use backtracking to build valid parentheses.
+- Add '(' if open < n
+- Add ')' if close < open
+- Use StringBuilder + backtracking
+
+Pattern:
+Choice → Constraint → Recurse → Backtrack
+
+Time Complexity:
+O(4^n / √n)  (Catalan number)
+
+Space Complexity:
+O(n) recursion stack
+*/
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList<>();
+        StringBuilder temp = new StringBuilder();
+        
+        recur(n, 0, 0, temp, ans);
+        return ans;
+    }
+
+    public void recur(int n, int open, int close, StringBuilder temp, List<String> ans) {
+
+        if (temp.length() == 2 * n) {
+            ans.add(temp.toString());
+            return;
+        }
+
+        if (open < n) {
+            temp.append('(');
+            recur(n, open + 1, close, temp, ans);
+            temp.deleteCharAt(temp.length() - 1);
+        }
+
+        if (close < open) {
+            temp.append(')');
+            recur(n, open, close + 1, temp, ans);
+            temp.deleteCharAt(temp.length() - 1);
+        }
+    }
+}

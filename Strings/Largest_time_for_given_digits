@@ -1,0 +1,66 @@
+// Problem: Largest Time for Given Digits
+// Approach: Backtracking (Permutation Generation)
+// Pattern: Generate all permutations using recursion + visited array
+// Idea: Try all possible 4-digit combinations and keep track of the maximum valid time
+
+// Time Complexity: O(4!)
+// - Total permutations of 4 digits = 24
+// - Constant work for each permutation
+
+// Space Complexity: O(1)
+// - Recursion depth is constant (max 4)
+// - No extra space except small variables
+
+class Solution {
+    int max;
+    String ans;
+
+    public String largestTimeFromDigits(int[] arr) {
+        max = -1; 
+        ans = "";
+        boolean[] used = new boolean[4]; 
+
+        // Generate all permutations using backtracking
+        solve(arr, new StringBuilder(), used);
+        
+        // Format result into HH:MM if valid time found
+        if (!ans.equals("")) {
+            ans = ans.substring(0, 2) + ":" + ans.substring(2, 4);
+        }
+        return ans;
+    }
+
+    private void solve(int[] arr, StringBuilder curr, boolean[] used) {
+
+        // If 4 digits formed, check if valid time
+        if (curr.length() == 4) {
+            int hours = Integer.parseInt(curr.substring(0, 2));
+            int minutes = Integer.parseInt(curr.substring(2, 4));
+
+            if (hours < 24 && minutes < 60) {
+                int totalMinutes = hours * 60 + minutes; 
+
+                // Update maximum valid time
+                if (totalMinutes > max) {
+                    max = totalMinutes;
+                    ans = curr.toString();  
+                }
+            }
+            return;
+        }
+
+        // Try all unused digits
+        for (int i = 0; i < 4; i++) {
+            if (!used[i]) {
+                used[i] = true;
+                curr.append(arr[i]);
+
+                solve(arr, curr, used);
+
+                // Backtrack
+                curr.deleteCharAt(curr.length() - 1); 
+                used[i] = false;
+            }
+        }
+    }
+}

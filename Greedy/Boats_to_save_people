@@ -1,0 +1,32 @@
+// Problem: Boats to Save People
+// Approach: Greedy + Two Pointers
+// Pattern: Pair lightest + heaviest person to minimize boats
+// Idea: Sort the array, try to fit the heaviest person with the lightest one
+
+// Time Complexity: O(n log n)
+// - Sorting takes O(n log n)
+// - Two pointer traversal takes O(n)
+
+// Space Complexity: O(1)
+// - No extra space used (in-place sorting)
+
+class Solution {
+    public int numRescueBoats(int[] people, int limit) {
+        Arrays.sort(people);
+        int start = 0;
+        int end = people.length - 1;
+        int boats = 0;
+
+        // Two-pointer approach to pair people efficiently
+        while(start <= end){
+            if(people[start] + people[end] <= limit){
+                start++;
+                end--;
+            }else{
+                end--;
+            }
+            boats++;
+        }
+        return boats;
+    }
+}

@@ -1,0 +1,43 @@
+// Problem: Letter Combinations of a Phone Number
+// Approach: Backtracking (Recursion)
+// Pattern: Take / Not Take → For each digit, try all possible letters and build combinations
+// Idea: Expand each digit into its mapped characters and recursively form strings
+
+// Time Complexity: O(4^n)
+// - Each digit can map to at most 4 letters (like '7' and '9')
+// - So total combinations ≈ 4^n
+
+// Space Complexity: O(n)
+// - Recursive stack depth = number of digits
+// - Additional space used for storing combinations
+class Solution {
+
+    static String[] mapping = {
+        "", "", "abc", "def", "ghi",
+        "jkl", "mno", "pqrs", "tuv", "wxyz"
+    };
+
+    public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+
+        if (digits.length() == 0) return result;
+
+        solve(digits, 0, "", result);
+        return result;
+    }
+
+    void solve(String digits, int index, String current, List<String> result) {
+
+        if (index == digits.length()) {
+            result.add(current);
+            return;
+        }
+
+        int digit = digits.charAt(index) - '0';
+        String letters = mapping[digit];
+
+        for (int i = 0; i < letters.length(); i++) {
+            solve(digits, index + 1, current + letters.charAt(i), result);
+        }
+    }
+}
