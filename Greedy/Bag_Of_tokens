@@ -1,0 +1,46 @@
+/*
+Problem: Bag of Tokens (LeetCode 948)
+
+Approach:
+- Greedy + Two Pointers
+- Sort tokens
+- Use 2 pointers:
+  - If power >= token = gain score (use smallest token)
+  - Else if score > 0 = regain power (use largest token)
+- Maximize score
+
+Pattern:
+- Greedy + Two Pointers
+
+Time Complexity:
+- O(N log N) (sorting)
+
+Space Complexity:
+- O(1)
+*/
+
+import java.util.*;
+
+class Solution {
+    public int bagOfTokensScore(int[] tokens, int power) {
+        Arrays.sort(tokens);
+
+        int i = 0, j = tokens.length - 1;
+        int score = 0, maxScore = 0;
+
+        while (i <= j) {
+            if (power >= tokens[i]) {
+                power -= tokens[i++];
+                score++;
+                maxScore = Math.max(maxScore, score);
+            } else if (score > 0) {
+                power += tokens[j--];
+                score--;
+            } else {
+                break;
+            }
+        }
+
+        return maxScore;
+    }
+}
