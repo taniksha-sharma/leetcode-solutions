@@ -15,6 +15,7 @@ Solutions are organized topic-wise:
 - Strings
 - Greedy
 - Backtracking
+- Trees
 
 ## Approach
 Each problem includes:
