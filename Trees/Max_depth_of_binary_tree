@@ -1,0 +1,17 @@
+/*
+Pattern: Tree Recursion (Postorder)
+Approach: Depth = 1 + max(left, right)
+Time Complexity: O(n)
+Space Complexity: O(h)
+*/
+
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root == null) return 0;
+
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+
+        return 1 + Math.max(left, right);
+    }
+}

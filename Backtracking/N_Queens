@@ -1,0 +1,44 @@
+/*
+Pattern: Backtracking
+Approach: Place queens row by row, check column & diagonals
+Time Complexity: O(n!)
+Space Complexity: O(n)
+*/
+
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> ans = new ArrayList<>();
+        boolean[] col = new boolean[n];
+        boolean[] diag1 = new boolean[2*n - 1];
+        boolean[] diag2 = new boolean[2*n - 1];
+
+        char[][] board = new char[n][n];
+        for(char[] row : board) Arrays.fill(row, '.');
+
+        backtrack(0, n, board, ans, col, diag1, diag2);
+        return ans;
+    }
+
+    void backtrack(int row, int n, char[][] board, List<List<String>> ans,
+                   boolean[] col, boolean[] diag1, boolean[] diag2){
+
+        if(row == n){
+            List<String> res = new ArrayList<>();
+            for(char[] r : board) res.add(new String(r));
+            ans.add(res);
+            return;
+        }
+
+        for(int c = 0; c < n; c++){
+            if(col[c] || diag1[row+c] || diag2[row-c+(n-1)]) continue;
+
+            board[row][c] = 'Q';
+            col[c] = diag1[row+c] = diag2[row-c+(n-1)] = true;
+
+            backtrack(row+1, n, board, ans, col, diag1, diag2);
+
+            board[row][c] = '.';
+            col[c] = diag1[row+c] = diag2[row-c+(n-1)] = false;
+        }
+    }
+}
