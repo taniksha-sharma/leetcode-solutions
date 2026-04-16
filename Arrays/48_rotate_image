@@ -1,0 +1,28 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for(int i = 0; i < n ; i++)
+        {//transpose matrix (rows intop columns by swapping across diagonals)
+            for(int j = i ; j < n ; j++){ //swap matrix [i][j] and matrix[j][i]
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp ;
+            }
+        }
+           
+        for (int i =0; i<n ; i++)
+        {  //reverse rows , 90 degree clockwise rotation
+            int left = 0 ;
+            int right = n-1 ;
+
+            while(left < right ){ //reverse current row 
+                int temp = matrix[i][left]; //swap elements at left & right 
+                matrix[i][left] = matrix[i][right];
+                matrix[i][right] = temp;
+                left++;
+                right --;
+            }
+        }
+        
+    }
+}
