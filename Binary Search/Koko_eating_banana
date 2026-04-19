@@ -1,0 +1,36 @@
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        int low = 1;
+        int high = getMax(piles); //max pile size 
+        int ans = high; //store min valid speed 
+        while (low<= high){
+            int mid = low + (high - low)/2; //possible speed
+            long hrsNeeded = calcHrs(piles , mid);
+            //if koko can finish within h hours
+            if(hrsNeeded <= h){
+                ans = mid; //mid is a valid answer 
+                high = mid - 1;
+            }else {
+                low = mid + 1; //need faster speed
+            }
+        }
+        return ans;
+        
+    }
+    //find max pile
+    private int getMax(int[] piles){
+        int max = 0;
+        for(int p : piles){
+            max = Math.max(max,p );
+        }
+        return max;
+    } 
+    //calc total hrs for given speed
+    private long calcHrs(int[] piles, int k){
+        long hrs = 0;
+        for(int pile : piles){
+            hrs += (pile + k - 1)/k;
+        }
+        return hrs;
+    }
+}
