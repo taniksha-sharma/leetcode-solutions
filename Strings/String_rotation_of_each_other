@@ -1,0 +1,111 @@
+/*
+ PROBLEM: Check if one string is a rotation of another
+
+ INTUITION:
+If s2 is a rotation of s1, then it will always be a substring of (s1 + s1)
+
+Example:
+s1 = "abcd"
+Rotations = "abcd", "bcda", "cdab", "dabc"
+
+s1 + s1 = "abcdabcd"
+All rotations will appear as substring in this
+
+ APPROACH:
+1. If lengths are not equal → return false
+2. Concatenate s1 with itself → text = s1 + s1
+3. Check if s2 exists in this new string
+4. Instead of using built-in contains(), use KMP (efficient string matching)
+
+ PATTERN USED:
+"String Rotation + Pattern Matching"
+ KMP (Knuth-Morris-Pratt Algorithm)
+
+ WHY KMP?
+- Avoids re-checking characters
+- Works in O(N + M) time
+
+ TIME COMPLEXITY:
+O(N + M)
+
+ SPACE COMPLEXITY:
+O(M) for LPS array
+*/
+class Solution {
+
+    public static boolean areRotations(String s1, String s2) {
+        
+        // Step 1: Length check (basic validation)
+        if (s1.length() != s2.length()) return false;
+        
+        // Step 2: Concatenate s1 with itself
+        // All possible rotations of s1 will be present in this string
+        String text = s1 + s1;
+        String pattern = s2;
+
+        int n = text.length();
+        int m = pattern.length();
+        
+        // Step 3: Compute LPS array for pattern (used in KMP)
+        int[] lps = computeLPS(pattern);
+
+        int i = 0; // pointer for text
+        int j = 0; // pointer for pattern
+        
+        // Step 4: KMP Pattern Matching
+        while (i < n) {
+            
+            // If characters match → move both pointers
+            if (text.charAt(i) == pattern.charAt(j)) {
+                i++;
+                j++;
+            }
+            
+            // If full pattern matched → rotation found
+            if (j == m) return true;
+            
+            // If mismatch occurs
+            else if (i < n && text.charAt(i) != pattern.charAt(j)) {
+                
+                // Use LPS to avoid re-checking characters
+                if (j != 0) j = lps[j - 1];
+                else i++; // move text pointer if j == 0
+            }
+        }
+        
+        // Pattern not found → not a rotation
+        return false;
+    }
+
+    // Function to compute LPS (Longest Prefix Suffix) array
+    private static int[] computeLPS(String pattern) {
+        
+        int m = pattern.length();
+        int[] lps = new int[m];
+        
+        int len = 0; // length of previous longest prefix suffix
+        int i = 1;
+
+        while (i < m) {
+            
+            // If characters match → extend prefix-suffix
+            if (pattern.charAt(i) == pattern.charAt(len)) {
+                len++;
+                lps[i] = len;
+                i++;
+            } 
+            else {
+                // If mismatch after some matches
+                if (len != 0) {
+                    len = lps[len - 1]; // fallback using LPS
+                } 
+                else {
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+        
+        return lps;
+    }
+}
