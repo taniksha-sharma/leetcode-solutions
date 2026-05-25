@@ -1,0 +1,46 @@
+//sliding window + freq array
+class Solution {
+    public String minWindow(String s, String t) {
+        int freq[] = new int[128];
+        for(char c : t.toCharArray()){
+            freq[c]++;
+        }
+        int left = 0;
+        int count = t.length();
+        int minLen = Integer.MAX_VALUE; //stores length of smallest valid window 
+        int start = 0;
+
+        for(int right = 0 ; right < s.length(); right++ ){
+            char c = s.charAt(right); //curr char entering window
+            if(freq[c]>0){ //if curr element is needed , decrease required count
+            count--;
+        }
+        freq[c]--; //dec freq bcz char is inside window 
+        while(count == 0){ //while count becomes 0 , i.e., window contains all elemenst of t 
+        //update min window if curr window is smaller
+        if(right - left + 1 < minLen){
+                    minLen = right - left + 1;
+                    start = left;
+                }
+
+                //char that will be removed from window
+                char leftChar = s.charAt(left);
+
+                //restore its freq bcz we are removing it
+                freq[leftChar]++;
+
+                //if frequency becomes +ve : we lost a required character
+                if(freq[leftChar] > 0){
+                    count++;
+                }
+                //move left pointer to shrink window
+                left++;
+            }
+        }
+
+        //if no valid window found return empty string
+        if(minLen == Integer.MAX_VALUE)
+        return "";
+        return s.substring(start, start + minLen);  //smallest substring
+    }
+}
