@@ -1,0 +1,68 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+public class Codec {
+
+    //Serialize
+    public String serialize(TreeNode root) {
+        // StringBuilder is efficient for string concatenation
+        StringBuilder sb = new StringBuilder();
+        // Perform preorder traversal
+        preorderSerialize(root, sb);
+        // Return serialized string
+        return sb.toString();
+    }
+
+    // Preorder Traversal(Root-Left-Right)
+    private void preorderSerialize(TreeNode node, StringBuilder sb) {
+
+        // If node is null, store "N" as marker
+        if (node == null) {
+            sb.append("N,");
+            return;
+        }
+
+        // Store current node value
+        sb.append(node.val).append(",");
+        preorderSerialize(node.left, sb);
+        preorderSerialize(node.right, sb);
+    }
+    //Deserialize
+    public TreeNode deserialize(String data) {
+        // Split string at commas
+        String[] values = data.split(",");
+        // Queue helps us process nodes in preorder order
+        Queue<String> queue = new LinkedList<>();
+        // Add all values into queue
+        for (String value : values) {
+            queue.offer(value);
+        }
+        // Reconstruct tree recursively
+        return buildTree(queue);
+    }
+    // Builds tree from serialized preorder data
+    private TreeNode buildTree(Queue<String> queue) {
+        // Get current value
+        String value = queue.poll();
+        // If value is N, it represents null node
+        if (value.equals("N")) {
+            return null;
+        }
+
+        // Create node using current value
+        TreeNode root = new TreeNode(Integer.parseInt(value));
+        // Build left subtree
+        root.left = buildTree(queue);
+        // Build right subtree
+        root.right = buildTree(queue);
+        // Return constructed node
+        return root;
+    }
+}
