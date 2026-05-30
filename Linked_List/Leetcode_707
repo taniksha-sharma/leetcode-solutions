@@ -1,0 +1,100 @@
+class MyLinkedList {
+
+    // Node class
+    class Node {
+        int val;
+        Node next;
+
+        Node(int val) {
+            this.val = val;
+        }
+    }
+
+    private Node dummy; // Dummy head node
+    private int size;   // Current size of linked list
+
+    // Constructor
+    public MyLinkedList() {
+        dummy = new Node(0);
+        size = 0;
+    }
+
+    // Get value at given index
+    public int get(int index) {
+
+        // Invalid index
+        if (index < 0 || index >= size) {
+            return -1;
+        }
+
+        Node curr = dummy.next;
+
+        // Move to required index
+        for (int i = 0; i < index; i++) {
+            curr = curr.next;
+        }
+
+        return curr.val;
+    }
+
+    // Add node at beginning
+    public void addAtHead(int val) {
+        addAtIndex(0, val);
+    }
+
+    // Add node at end
+    public void addAtTail(int val) {
+        addAtIndex(size, val);
+    }
+
+    // Add node before given index
+    public void addAtIndex(int index, int val) {
+
+        // If index is greater than size, do nothing
+        if (index > size) {
+            return;
+        }
+
+        // Negative index treated as 0
+        if (index < 0) {
+            index = 0;
+        }
+
+        Node prev = dummy;
+
+        // Reach node before insertion position
+        for (int i = 0; i < index; i++) {
+            prev = prev.next;
+        }
+
+        // Create new node
+        Node newNode = new Node(val);
+
+        // Insert node
+        newNode.next = prev.next;
+        prev.next = newNode;
+
+        size++;
+    }
+
+    // Delete node at given index
+    public void deleteAtIndex(int index) {
+
+        // Invalid index
+        if (index < 0 || index >= size) {
+            return;
+        }
+
+        Node prev = dummy;
+
+        // Reach node before target node
+        for (int i = 0; i < index; i++) {
+            prev = prev.next;
+        }
+
+        // Skip the node to delete it
+        prev.next = prev.next.next;
+
+        size--;
+    }
+}
