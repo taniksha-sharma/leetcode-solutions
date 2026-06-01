@@ -1,0 +1,56 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        //Stores final unique triplets
+        List<List<Integer>> result = new ArrayList<>();
+
+        //sort the array
+        Arrays.sort(nums);
+        int n = nums.length;
+        //fix one element at a time
+        for (int i = 0; i < n - 2; i++) {
+            //skip duplicate first elements
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int left = i + 1;
+            int right = n - 1;
+            //search for remaining two numbers
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                //need larger sum
+                if (sum < 0) {
+                    left++;
+                }
+                //need smaller sum
+                else if (sum > 0) {
+                    right--;
+                }
+
+                // Found valid triplet
+                else {
+
+                    result.add(Arrays.asList(
+                            nums[i],
+                            nums[left],
+                            nums[right]
+                    ));
+                    // Move both pointers
+                    left++;
+                    right--;
+                    // Skip duplicate values on left side
+                    while (left < right &&
+                           nums[left] == nums[left - 1]) {
+                        left++;
+                    }
+                    // Skip duplicate values on right side
+                    while (left < right &&
+                           nums[right] == nums[right + 1]) {
+                        right--;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+}
