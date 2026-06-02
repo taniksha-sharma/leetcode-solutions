@@ -1,0 +1,21 @@
+class Solution { //greedy + bit manipulation
+    public int integerReplacement(int n) {
+        long num = n; //to prevent overflow
+        int steps = 0;
+        while(num != 1){
+            if(num % 2 == 0){
+                num /= 2; //even case 
+            }else {
+                //odd case
+                if(num == 3 || ((num & 2) == 0)){
+                    num--; 
+                }else {
+                    num++;
+                }
+                }
+                steps++;
+            }
+            return steps;
+        }
+        
+    }
