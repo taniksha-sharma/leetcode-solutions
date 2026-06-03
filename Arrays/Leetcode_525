@@ -1,0 +1,25 @@
+//longest sum, binary array  = prefix sum + hashmap
+class Solution {
+    public int findMaxLength(int[] nums) {
+        HashMap <Integer, Integer> map = new HashMap<>();
+        map.put(0,-1); 
+        int sum = 0;
+        int maxlength = 0 ;
+        for(int i = 0 ; i < nums.length ; i++){
+            if(nums[i] == 0){
+                sum -= 1; //treat 0  as -1
+            } else {
+                sum += 1; //treat 1 as +1
+            }
+            if(map.containsKey(sum)){
+                int prevIndex = map.get(sum);//find 1st index where sum appeared 
+                int length = i - prevIndex; //subarray btw previous ibdex = 1 and i has equal no of 0s and 1s
+                maxlength = Math.max(length , maxlength);
+            }else{
+                map.put(sum,i); //store first occurence of prefix sum
+            }
+        }
+        return maxlength;
+        
+    }
+}
