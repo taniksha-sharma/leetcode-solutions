@@ -1,0 +1,26 @@
+class Solution {
+    public int majorityElement(int[] nums) {
+        Map<Integer,Integer>map= new HashMap<>();  //stores number and count 
+        for(int i=0; i<nums.length;i++)
+        {
+         if(map.containsKey(nums[i]))
+         {
+            map.put(nums[i],map.get(nums[i])+1);  //if number already exists , increases count by 1 
+         }   
+         else{
+         map.put(nums[i],1);  //for new entries , stores counts as 1
+        }
+        
+    }
+
+int majority= (nums.length/2);  //checks majority , number should be > than this
+int result=0;
+for(Map.Entry<Integer,Integer>entry: map.entrySet()){  //iterates through the hash table , all the entries 
+    if(entry.getValue()>majority)   //checks if the count of any digit is greater than array for example in given ques ,count of 3 is 2 , majority is 3/2=1.5 , count of 3 i.e 2 is greater than 1.5 so majority becomes 3!
+    {
+        result= entry.getKey();  //returns number
+    }
+}
+return result ;  //returns majority 
+    }
+}
