@@ -1,0 +1,54 @@
+//difference array + prefix sum
+class Solution {
+    public String shiftingLetters(String s, int[][] shifts) {
+        int n = s.length();
+        int[] diff = new int[n + 1];
+        for (int[] shift : shifts) {
+
+            int left = shift[0];
+            int right = shift[1];
+            int direction = shift[2];
+
+            // Forward shift = +1
+            if (direction == 1) {
+
+                diff[left] += 1;
+
+                if (right + 1 < n) {
+                    diff[right + 1] -= 1;
+                }
+            }
+
+            // Backward shift = -1
+            else {
+
+                diff[left] -= 1;
+
+                if (right + 1 < n) {
+                    diff[right + 1] += 1;
+                }
+            }
+        }
+        StringBuilder ans = new StringBuilder();
+        int prefix = 0;
+        // Prefix sum se har index ka net shift calc
+        for (int i = 0; i < n; i++) {
+
+            prefix += diff[i];
+            // Curr char
+            char ch = s.charAt(i);
+            // convert char ko 0-25 range
+            int pos = ch - 'a';
+            //apply net shift 
+            pos = (pos + prefix) % 26;
+            // java me negative modulo aa sakta hai
+            if (pos < 0) {
+                pos += 26;
+            }
+
+            // vapas char me convert
+            ans.append((char)(pos + 'a'));
+        }
+        return ans.toString();
+    }
+}
