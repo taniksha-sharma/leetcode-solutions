@@ -1,0 +1,45 @@
+class Solution {
+    public int[] corpFlightBookings(int[][] bookings, int n) {
+
+        // Difference array banayi hai
+        int[] diff = new int[n];
+
+        // Har booking ko process karo
+        for (int[] booking : bookings) {
+
+            // Booking details nikalo
+            int firstFlight = booking[0];
+            int lastFlight = booking[1];
+            int seats = booking[2];
+
+            // Flights 1-indexed hain, array 0-indexed hai
+            int l = firstFlight - 1;
+            int r = lastFlight - 1;
+
+            // l se seats add hona start honge
+            diff[l] += seats;
+
+            // r ke baad effect band karna hai
+            if (r + 1 < n) {
+                diff[r + 1] -= seats;
+            }
+        }
+
+        // Prefix sum laga kar actual seats nikalenge
+        int[] ans = new int[n];
+
+        // Current flight tak total seats
+        int prefix = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            // Difference array ko prefix sum me convert karo
+            prefix += diff[i];
+
+            // Ye flight par total booked seats hain
+            ans[i] = prefix;
+        }
+
+        return ans;
+    }
+}
