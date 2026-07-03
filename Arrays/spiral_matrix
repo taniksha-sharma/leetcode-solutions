@@ -1,0 +1,39 @@
+class Solution { 
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> ans = new ArrayList<>();
+        if(matrix == null || matrix.length == 0) return ans;
+        
+        int top = 0;
+        int bottom = matrix.length - 1;
+        int left = 0;
+        int right = matrix[0].length - 1;
+        
+        while(top <= bottom && left <= right) {
+            
+            // 1 Traverse top row (left → right)
+            for(int col = left; col <= right; col++) {//Traverse top row (left → right)
+                ans.add(matrix[top][col]);
+            }
+            top++; // shrink top
+            for(int row = top; row <= bottom; row++) {// Traverse right column (top → bottom)
+                ans.add(matrix[row][right]);
+            }
+            right--; // shrink right
+            
+            if(top <= bottom) {            // Traverse bottom row (right → left) if still valid
+                for(int col = right; col >= left; col--) {
+                    ans.add(matrix[bottom][col]);
+                }
+                bottom--; // shrink bottom
+            }
+            if(left <= right) { // Traverse left column (bottom → top) if still valid
+                for(int row = bottom; row >= top; row--) {
+                    ans.add(matrix[row][left]);
+                }
+                left++; // shrink left
+            }
+        }
+        
+        return ans;
+    }
+}
