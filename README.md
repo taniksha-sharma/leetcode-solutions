@@ -5,23 +5,9 @@ This repository contains my Data Structures and Algorithms practice with clean, 
 
 - Language: Java
 - Focus: Problem solving and pattern recognition
-- Goal: Crack product-based companies
 
 ## Structure
-Solutions are organized topic-wise:
-- Arrays
-- Dynamic Programming
-- Recursion
-- Strings
-- Greedy
-- Backtracking
-- Trees
-
-## Approach
-Each problem includes:
-- Problem description
-- Approach explanation
-- Time and space complexity
+Solutions are organized topic-wise
 
 ## Note
 This repository is regularly updated with new problems.
