@@ -1,13 +1,13 @@
 # LeetCode Solutions by Taniksha
 
-## About
+## About 🚀
 This repository contains my Data Structures and Algorithms practice with clean, optimized, and well-documented solutions.
 
-- Language: Java
+- Language: Java ☕️
 - Focus: Problem solving and pattern recognition
 
 ## Structure
 Solutions are organized topic-wise
 
-## Note
+## Note 
 This repository is regularly updated with new problems.
