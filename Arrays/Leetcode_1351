@@ -1,0 +1,32 @@
+class Solution {
+    public int countNegatives(int[][] grid) {
+
+        int n = grid.length;
+        int m = grid[0].length;
+
+        int row = 0;
+        int col = m - 1;
+
+        int count = 0;
+
+        while (row < n && col >= 0) {
+
+            // Negative mil gaya
+            if (grid[row][col] < 0) {
+
+                // Is row se neeche sab negative honge
+                count += (n - row);
+
+                // Aur negatives dhundhne ke liye left move krenge
+                col--;
+            }
+            else {
+
+                // Positive hai toh we will go down
+                row++;
+            }
+        }
+
+        return count;
+    }
+}
