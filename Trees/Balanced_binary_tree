@@ -1,0 +1,43 @@
+/*
+Balanced Tree:
+DFS returns height
+-1 means bad subtree*/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        // agar -1 nahi aaya matlab balanced hai
+        return height(root) != -1;
+    }
+    public int height(TreeNode root)
+    {
+        if(root == null)
+            return 0;
+        int left = height(root.left);
+        // left subtree already unbalanced
+        if(left == -1)
+            return -1;
+        int right = height(root.right);
+        // right subtree already unbalanced
+        if(right == -1)
+            return -1;
+        // current node unbalanced
+        if(Math.abs(left-right) > 1)
+            return -1;
+        // warna normal height return 
+        return 1 + Math.max(left,right);
+    }
+}
