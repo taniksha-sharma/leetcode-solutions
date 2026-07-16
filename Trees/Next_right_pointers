@@ -1,0 +1,63 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+    
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
+class Solution {
+    public Node connect(Node root) {
+
+        // Agar tree empty hai to kuch connect nahi karna
+        if(root == null)
+            return null;
+
+        Queue<Node> q = new LinkedList<>();
+
+        // Root ko queue me daal do
+        q.offer(root);
+
+        while(!q.isEmpty())
+        {
+            //check nodes at curr level
+            int size = q.size();
+
+            //pure level ke nodes process karenge
+            for(int i = 0; i < size; i++)
+            {
+                //Queue se current node nikalo
+                Node curr = q.poll();
+
+                // Agar ye level ka last node nahi hai to iska next queue ke front wale node se connect hoga
+                if(i < size - 1)
+                {
+                    curr.next = q.peek();
+                }
+
+                //add left child to queue
+                if(curr.left != null)
+                    q.offer(curr.left);
+
+                //add right child to queue
+                if(curr.right != null)
+                    q.offer(curr.right);
+            }
+        }
+        return root;
+    }
+}
