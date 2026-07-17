@@ -1,0 +1,54 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+class Solution {
+
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+
+        // Agar main tree khatam ho gaya
+        // aur abhi tak subtree nahi mila
+        if (root == null)
+            return false;
+
+        // Check karo kya current node se subtree same hai
+        if (isSame(root, subRoot))
+            return true;
+
+        // Left ya right subtree me search karo
+        return isSubtree(root.left, subRoot) ||
+               isSubtree(root.right, subRoot);
+    }
+
+    // Dono trees exactly same hain ya nahi
+    public boolean isSame(TreeNode p, TreeNode q) {
+
+        // Dono null hain -> same
+        if (p == null && q == null)
+            return true;
+
+        // Ek null aur doosra non-null
+        if (p == null || q == null)
+            return false;
+
+        // Value alag hai
+        if (p.val != q.val)
+            return false;
+
+        // Left aur right dono same hone chahiye
+        return isSame(p.left, q.left) &&
+               isSame(p.right, q.right);
+    }
+}
