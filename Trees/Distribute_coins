@@ -1,0 +1,33 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int moves = 0;
+    public int distributeCoins(TreeNode root) {
+        dfs(root); //dfs lagayenge last se upar aayenge
+        return moves;
+    }
+    public int dfs(TreeNode root){ //post order traversal krenge left -> right -> root 
+        if(root == null){
+            return 0;
+        }
+        int left = dfs(root.left);  //left subtreee k moves
+        int right = dfs(root.right); //right subtree k moves
+        moves += Math.abs(left) + Math.abs(right); //abs value add krenge + or - bs direction btata hai isliye abs value lenge
+    
+    return left + right + root.val - 1;
+        //return kra denge no of moves since left + right + root - 1
+    }
+}
