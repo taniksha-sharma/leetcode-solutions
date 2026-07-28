@@ -1,0 +1,30 @@
+class Solution {
+    public String smallestPalindrome(String s) {
+        int[] freq = new int[26];
+
+        for (char ch : s.toCharArray()) {
+            freq[ch - 'a']++;
+        }
+        StringBuilder left = new StringBuilder();
+        char middle = '\0';
+        for (int i = 0; i < 26; i++) {
+            // Half char left side me jayenge
+            int half = freq[i] / 2;
+            // Utni baar char add karo
+            while (half-- > 0) {
+                left.append((char) ('a' + i));
+            }
+            //agar odd frequency hai to ye middle char hoga
+            if (freq[i] % 2 == 1) {
+                middle = (char) ('a' + i);
+            }
+        }
+        //Left ka reverse hi right part banega
+        String right = new StringBuilder(left).reverse().toString();
+        //Final palindrome
+        if (middle != '\0') {
+            return left.toString() + middle + right;
+        }
+        return left.toString() + right;
+    }
+}
