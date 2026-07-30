@@ -1,0 +1,20 @@
+class Solution {
+    public int minimumPushes(String word) {
+        // Total kitne unique letters hain
+        int n = word.length();
+        // Final answer store karega
+        int ans = 0;
+        // Current push cost pehle group ke liye 1 push
+        int pushes = 1;
+        // Har 8 letters ka ek group banega
+        for (int i = 0; i < n / 8; i++) {
+            // Is group me 8 letters hain har ek ko 'pushes' baar press karna padega
+            ans += pushes * 8;
+            // Agle group ki cost increase ho jayegi
+            pushes++;
+        }
+        // Agar last me kuch letters bach gye un sabko current push cost lagegi
+        ans += pushes * (n % 8);
+        return ans;
+    }
+}
