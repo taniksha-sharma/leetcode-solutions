@@ -1,0 +1,25 @@
+class Solution {
+    public List<Boolean> camelMatch(String[] queries, String pattern) {
+        List<Boolean> result = new ArrayList<>();
+        for (String query : queries) {
+            result.add(isMatch(query, pattern));
+        }   
+        return result;
+    }
+    private boolean isMatch(String query, String pattern) {
+        int patIdx = 0;
+        for (int i = 0; i < query.length(); i++) {
+            char ch = query.charAt(i);
+            // If character matches the current pattern character, advance pattern pointer
+            if (patIdx < pattern.length() && ch == pattern.charAt(patIdx)) {
+                patIdx++;
+            } 
+            // If character is an unmatched uppercase letter, match fails
+            else if (Character.isUpperCase(ch)) {
+                return false;
+            }
+        }
+        // Lowercase characters that don't match pattern are ignore return true only if all pattern characters were matched
+        return patIdx == pattern.length();
+    }
+}
