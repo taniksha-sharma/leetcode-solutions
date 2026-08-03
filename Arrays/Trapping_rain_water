@@ -1,0 +1,36 @@
+class Solution {
+    public int trap(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        // Left side ka maximum height
+        int leftMax = 0;
+        // Right side ka maximum height
+        int rightMax = 0;
+        int water = 0;
+        while (left < right) {
+            // Agar left wall chhoti hai
+            if (height[left] < height[right]) {
+                // Agar naya maximum mil gaya
+                if (height[left] >= leftMax) {
+                    leftMax = height[left];
+                } else {
+                    // Water store hoga
+                    water += leftMax - height[left];
+                }
+                left++;
+            }
+            // Right wall chhoti ya equal hai
+            else {
+                // Naya right maximum
+                if (height[right] >= rightMax) {
+                    rightMax = height[right];
+                } else {
+                    // Water store hoga
+                    water += rightMax - height[right];
+                }
+                right--;
+            }
+        }
+        return water;
+    }
+}
