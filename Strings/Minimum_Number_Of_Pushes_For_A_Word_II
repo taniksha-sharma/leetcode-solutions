@@ -1,0 +1,31 @@
+class Solution {
+    public int minimumPushes(String word) {
+
+        // Har character ki frequency store karne ke liye
+        int[] freq = new int[26];
+
+        // Frequency count
+        for (char ch : word.toCharArray()) {
+            freq[ch - 'a']++;
+        }
+
+        // Ascending sort
+        Arrays.sort(freq);
+
+        int ans = 0;
+
+        // Largest frequency se iterate karenge
+        for (int i = 0; i < 26; i++) {
+
+            // Reverse index (highest frequency)
+            int f = freq[25 - i];
+
+            // Har 8 letters ke baad push cost 1 se badh jayegi
+            int pushes = (i / 8) + 1;
+
+            ans += f * pushes;
+        }
+
+        return ans;
+    }
+}
