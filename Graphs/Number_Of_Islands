@@ -1,0 +1,39 @@
+class Solution {
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0) {
+            return 0;
+        }
+
+        int n = grid.length;
+        int m = grid[0].length;
+        int islandCount = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // Jab bhi '1' (Land) milta hai, DFS start karo
+                if (grid[i][j] == '1') {
+                    islandCount++;
+                    dfs(grid, i, j, n, m);
+                }
+            }
+        }
+
+        return islandCount;
+    }
+
+    private void dfs(char[][] grid, int r, int c, int n, int m) {
+        // Boundary check + Water ('0') check
+        if (r < 0 || r >= n || c < 0 || c >= m || grid[r][c] == '0') {
+            return;
+        }
+
+        // Cell ko visited mark karne ke liye '0' kar dete hain
+        grid[r][c] = '0';
+
+        // Only 4 directions: Up, Down, Left, Right
+        dfs(grid, r - 1, c, n, m); // Up
+        dfs(grid, r + 1, c, n, m); // Down
+        dfs(grid, r, c - 1, n, m); // Left
+        dfs(grid, r, c + 1, n, m); // Right
+    }
+}
