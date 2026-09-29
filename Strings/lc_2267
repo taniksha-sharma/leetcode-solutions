@@ -1,0 +1,70 @@
+class Solution {
+    int m, n;
+    char[][] grid;
+    boolean[][][] visited;
+    public boolean hasValidPath(char[][] grid) {
+        this.grid = grid;
+        m = grid.length;
+        n = grid[0].length;
+        // Total number of cells in every path
+        int length = m + n - 1;
+        // Valid parentheses string must have even length
+        if (length % 2 == 1) {
+            return false;
+        }
+        // A valid string cannot start with ')'
+        if (grid[0][0] == ')') {
+            return false;
+        }
+        // A valid string must end with ')'
+        if (grid[m - 1][n - 1] == '(') {
+            return false;
+        }
+        visited = new boolean[m][n][m + n];
+        return dfs(0, 0, 0);
+    }
+    private boolean dfs(int row, int col, int balance) {
+        // Already visited this state
+        if (visited[row][col][balance]) {
+            return false;
+        }
+        visited[row][col][balance] = true;
+        // Update balance using current cell
+        if (grid[row][col] == '(') {
+            balance++;
+        } else {
+            balance--;
+        }
+        // Balance can never become negative
+        if (balance < 0) {
+            return false;
+        }
+        // Number of cells remaining after current cell
+        int remaining = (m - 1 - row) + (n - 1 - col);
+        // Not enough ) cells remaining to close all ()
+        if (balance > remaining) {
+            return false;
+        }
+
+        // Reached destination
+        if (row == m - 1 && col == n - 1) {
+            return balance == 0;
+        }
+
+        // Move down
+        if (row + 1 < m) {
+            if (dfs(row + 1, col, balance)) {
+                return true;
+            }
+        }
+
+        // Move right
+        if (col + 1 < n) {
+            if (dfs(row, col + 1, balance)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
